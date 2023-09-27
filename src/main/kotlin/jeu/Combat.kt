@@ -11,16 +11,51 @@ class Combat(
     // Méthode pour simuler un tour de combat du joueur
     fun tourDeJoueur() {
         println("\u001B[34m ---Tour de ${this.jeu.joueur.nom} (pv: ${this.jeu.joueur.pointDeVie}) ---")
-       //TODO Mission 1.2
-        this.jeu.joueur.attaque(monstre)
+
+        // Afficher les options d'action disponibles avec des numéros
+        println("Actions disponibles :")
+        println("0 => Attaquer")
+        println("1 => Passer")
+
+        // Inviter le joueur à choisir une action
+        print("Choisissez une action (0 ou 1) : ")
+        val choixAction = readLine()
+
+        // Traiter le choix de l'action
+        when (choixAction) {
+            "0" -> {
+                // Le joueur choisit d'attaquer
+                this.jeu.joueur.attaque(monstre)
+            }
+            "1" -> {
+                // Le joueur choisit de passer
+                println("Vous avez choisi de passer.")
+            }
+            else -> {
+                // Action invalide
+                println("Action invalide. Veuillez choisir une action valide.")
+            }
+        }
+
         println("\u001b[0m")
     }
 
     // Méthode pour simuler un tour de combat du monstre
+
     fun tourDeMonstre() {
         println("\u001B[31m---Tour de ${monstre.nom} (pv: ${monstre.pointDeVie}) ---")
-        //TODO Mission 1.3
-        this.monstre.attaque(this.jeu.joueur)
+
+        // Générer un nombre aléatoire entre 1 et 100
+        val randomDecision = (1..100).random()
+
+        if (randomDecision <= 70) {
+            // Le monstre choisit d'attaquer
+            monstre.attaque(jeu.joueur)
+        } else {
+            // Le monstre choisit de passer
+            println("Le monstre ${monstre.nom} a choisi de passer son tour.")
+        }
+
         println("\u001b[0m")
     }
 
