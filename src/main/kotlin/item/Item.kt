@@ -1,4 +1,15 @@
 package item
+import org.w3c.dom.NamedNodeMap
+import personnage.Personnage
 
-class Item {
+open class Item (val nom: String, val description: String){
+    open fun utiliser(cible: Personnage){
+        println("$nom ne peut pas etre utilisé.")
+
+    }
+
+
+    override fun toString():String {
+        return "${nom} (nom='$nom', description='$description')"
+}
 }

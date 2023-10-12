@@ -1,4 +1,9 @@
 package item
 
-class TypeArmure {
+class TypeArmure(
+        val nom: String,
+        val bonustype: Int
+) {
+
+
 }

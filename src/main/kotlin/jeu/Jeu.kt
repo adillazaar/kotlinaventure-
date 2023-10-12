@@ -38,7 +38,6 @@ class Jeu(monstres: List<Personnage>) {
 
     /**
      *  Méthode pour créer le personnage du joueur en demandant les informations à l'utilisateur
-     *
      */
 
 
@@ -57,8 +56,10 @@ class Jeu(monstres: List<Personnage>) {
         nom = readLine() ?: ""
 
         // repartir l'ensemble des 40 points
-        var restantPoints = 40
-        while (restantPoints > 0) {
+
+
+        while (true) {
+            var restantPoints = 40
             println("Points restants: $restantPoints")
 
             print("Points d'attaque (0-$restantPoints): ")
@@ -86,7 +87,7 @@ class Jeu(monstres: List<Personnage>) {
         val maxvie = 50 + endurance * 10
 
         // creation des atribue
-        val joueuratribut = Personnage(nom, maxvie, maxvie, attaque, defense, endurance, vitesse)
+        val joueuratribut = Personnage(nom, maxvie, maxvie, attaque, defense, endurance, vitesse, )
 
         // Assigner la creation du personnage au attribue du joueur character to the joueur attribute
         joueur = joueuratribut

@@ -1,11 +1,17 @@
 package jeu
 
+import item.Bombe
+import item.Item
+import item.Potion
 import personnage.Personnage
+import java.util.Random
 
 class Combat(
     val jeu :Jeu,
-    val monstre: Personnage
-) {
+    val monstre: Personnage,
+    var inventaire: MutableList<Item> = mutableListOf()) {
+
+
     var nombreTours: Int = 1
 
     // Méthode pour simuler un tour de combat du joueur
@@ -16,9 +22,11 @@ class Combat(
         println("Actions disponibles :")
         println("0 => Attaquer")
         println("1 => Passer")
+        println("2 => Boire Potion")
+        println("3 => Choisir un objet de son inventaire ")
 
         // Inviter le joueur à choisir une action
-        print("Choisissez une action (0 ou 1) : ")
+        print("Choisissez une action (0 ou 1 ou 2 ou 3) : ")
         val choixAction = readLine()
 
         // Traiter le choix de l'action
@@ -27,9 +35,31 @@ class Combat(
                 // Le joueur choisit d'attaquer
                 this.jeu.joueur.attaque(monstre)
             }
+
             "1" -> {
                 // Le joueur choisit de passer
                 println("Vous avez choisi de passer.")
+            }
+
+            "2" -> {
+                // Le joueur choisit dze boire une potion
+                this.jeu.joueur.boirePotion()
+            }
+            "3" -> {
+            // Le joueur choisis d'utliser un objet de son inventaire
+               println( this.jeu.joueur.afficherInventaire())
+                val choixInventaire = readln().toInt()
+                val tailleInventaire = this.jeu.joueur.inventaire.size
+
+                if ( choixInventaire <= tailleInventaire) {
+
+                    val item = this.jeu.joueur.inventaire[choixInventaire]
+                    if (item is Bombe) {
+                        item.utiliser(monstre)
+                    } else {
+                        item.utiliser(this.jeu.joueur)
+                    }
+                }
             }
             else -> {
                 // Action invalide
@@ -51,6 +81,13 @@ class Combat(
         if (randomDecision <= 70) {
             // Le monstre choisit d'attaquer
             monstre.attaque(jeu.joueur)
+
+        } else if (monstre.pointDeVie <= monstre.pointDeVieMax / 2 && randomDecision <= 80) {
+
+
+            monstre.boirePotion()
+
+
         } else {
             // Le monstre choisit de passer
             println("Le monstre ${monstre.nom} a choisi de passer son tour.")
@@ -58,6 +95,7 @@ class Combat(
 
         println("\u001b[0m")
     }
+
 
     // Méthode pour exécuter le combat complet
     fun executerCombat() {
